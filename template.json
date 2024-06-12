@@ -1,0 +1,10 @@
+{
+  "Actor": {
+    "types": ["Trainer", "Pokemon", "NPC"],
+    "htmlFields": ["biography", "description", "personality", "goals", "notes"],
+    "Trainer": {}
+  },
+  "Item": {
+    "types": ["class"]
+  }
+}

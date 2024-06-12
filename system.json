@@ -1,0 +1,22 @@
+{
+  "id": "ptu",
+  "title": "Pokemon Tabletop United",
+  "description": "The Pokemon Tabletop United system for FoundryVTT!",
+  "authors": [
+    {
+      "name": "Wandering Magi"
+    }
+  ],
+  "version": "0.0.1",
+  "esmodules": ["module/ptu.mjs"],
+  "styles": ["css/ptu.css"],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "english",
+      "path": "lang/en.json"
+    }
+  ],
+  "gridDistance": 1,
+  "gridUnits": "m"
+}
