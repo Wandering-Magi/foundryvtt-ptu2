@@ -59,14 +59,17 @@
 // }
 
 const fields = foundry.data.fields;
-class TrainerData extends foundry.abstract.TypeDataModel {
+export class TrainerData extends foundry.abstract.TypeDataModel {
   
 //   console.log("Building a trainer.");
   static defineSchema() {
 //     const commonData = super.defineSchema();
     return{
+      stats: new fields.SchemaField({
+        hp: new fields.NumberField({ initial: 10 })
+      })
 //       ...commonData,
-      biography: new fields.HTMLField(),
+//      biography: new fields.HTMLField(),
 //       personality: new fields.HTMLField(),
 //       description: new fields.HTMLField(),
 //       goals: new fields.HTMLField(),

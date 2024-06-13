@@ -50,7 +50,7 @@ Hooks.once("init", () => {
 
   console.log("Assigning trainers"),
   Object.assign(CONFIG.Actor.dataModels, {
-    Trainer: TrainerData,
+    trainer: TrainerData,
   })
 });
 
