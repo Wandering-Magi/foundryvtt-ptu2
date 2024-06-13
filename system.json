@@ -1,6 +1,6 @@
 {
   "id": "ptu",
-  "title": "Pokemon Tabletop United",
+  "title": "Pokemon Tabletop United - V-Magi",
   "description": "The Pokemon Tabletop United system for FoundryVTT!",
   "authors": [
     {
@@ -18,5 +18,12 @@
     }
   ],
   "gridDistance": 1,
-  "gridUnits": "m"
+  "gridUnits": "m",
+
+  "documentTypes": {
+    "Actor": {
+      "types": ["Trainer", "Pokemon", "NPC"],
+      "htmlFields":["biography", "description", "personality", "goals", "notes"]
+    }
+  }
 }
