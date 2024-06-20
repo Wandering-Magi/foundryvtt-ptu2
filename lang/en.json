@@ -1,55 +1,65 @@
 {
   "PTU": {
-    "HitPoints": "Hit Points",
-    "HP": "HP",
-    "Attack": "Attack",
-    "Atk": "Atk",
-    "Defense": "Defense",
-    "Def": "Def",
-    "SpecialAttack": "Special Attack",
-    "SpAtk": "Sp. Atk",
-    "SpecialDefense": "Special Defense",
-    "SpDef": "Sp. Def",
-    "Speed": "Speed",
-    "Spd": "Spd",
-
-    "Acrobatics": "Acrobatics",
-    "Athletics": "Athletics",
-    "Charm": "Charm",
-    "Combat": "Combat",
-    "Command": "Command",
-    "GenEd": "General Education",
-    "MedEd": "Medicine Education",
-    "OccEd": "Occult Education",
-    "PokeEd": "Pokemon Education",
-    "TechEd": "Technology Education",
-    "Focus": "Focus",
-    "Guile": "Guile",
-    "Intimidate": "Intimidate",
-    "Intuition": "Intuition",
-    "Perception": "Perception",
-    "Stealth": "Stealth",
-    "Survival": "Survival",
-
-    "Body": "Body",
-    "Mind": "Mind",
-    "Spirit": "Spirit",
-
+    "Stat": {
+      "Short": {
+        "HP": "HP",
+        "Atk": "Atk",
+        "Def": "Def",
+        "SpAtk": "Sp. Atk",
+        "SpDef": "Sp. Def",
+        "Spd": "Spd"
+      },
+      "Long": {
+        "HP": "Hit Points",
+        "Atk": "Attack",
+        "Def": "Defense",
+        "SpAtk": "Special Attack",
+        "SpDef": "Special Defense",
+        "Spd": "Speed"
+      }
+    },
+    "Skill": {
+      "Name": {
+        "Acrobatics": "Acrobatics",
+        "Athletics": "Athletics",
+        "Charm": "Charm",
+        "Combat": "Combat",
+        "Command": "Command",
+        "Gened": "General Education",
+        "Meded": "Medicine Education",
+        "Occed": "Occult Education",
+        "Poked": "Pokemon Education",
+        "Teced": "Technology Education",
+        "Focus": "Focus",
+        "Guile": "Guile",
+        "Intimidate": "Intimidate",
+        "Intuition": "Intuition",
+        "Perception": "Perception",
+        "Stealth": "Stealth",
+        "Survival": "Survival"
+      },
+      "Type": {
+        "Body": "Body",
+        "Mind": "Mind",
+        "Spirit": "Spirit"
+      },
+      "Rank": {
+        "Pathetic": "Pathetic",
+        "Untrained": "Untrained",
+        "Novice": "Novice",
+        "Adept": "Adept",
+        "Expert": "Expert",
+        "Master": "Master",
+        "Virtuoso": "Virtuoso"
+      }
+    },
     "Base": "Base",
     "Feat": "Feat",
     "Feats": "Feats",
-    "Bonus": "Bonus",
+    "Bonus": "Bonus", 
     "Level": "Level",
     "Stage": "Stage",
     "Combat Stage": "Combat Stage",
-
-    "Pathetic": "Pathetic",
-    "Untrained": "Untrained",
-    "Novice": "Novice",
-    "Adept": "Adept",
-    "Expert": "Expert",
-    "Master": "Master",
-    "Virtuoso": "Virtuoso",
 
     "Age": "Age",
     "Sex": "Sex",
@@ -58,6 +68,7 @@
     "Biography": "Biography",
     "Description": "Description",
     "Personality": "Personality",
-    "Goals": "Goals"
+    "Goals": "Goals",
+    "Notes": "Notes"
   }
 }

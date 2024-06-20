@@ -17,12 +17,40 @@
       "path": "lang/en.json"
     }
   ],
-  "gridDistance": 1,
-  "gridUnits": "m",
-
+  "grid": {
+    "distance": 1,
+    "units": "m"
+  },
+   
   "documentTypes": {
     "Actor": {
-      "trainer": {}
+      "trainer": {
+        "htmlFields": ["biography", "description", "personality", "goals", "notes"]
+      },
+      "pokemon": {}
+    },
+    "Item": {
+      "feature": {},
+      "trait": {},
+      "edge": {},
+      "move": {},
+      "class": {},
+      "keyItem": {},
+      "pokemonItem": {},
+      "generalItem": {},
+      "holdItem": {},
+      "battleItem": {},
+      "medicine": {},
+      "food": {},
+      "berry": {},
+      "shard": {},
+      "weapon": {},
+      "pokeball": {},
+      "accessory": {},
+      "machine": {},
+      "badge": {}
+      
     }
   }
+  
 }
