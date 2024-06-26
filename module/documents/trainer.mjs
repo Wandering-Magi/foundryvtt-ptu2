@@ -1,4 +1,3 @@
-import { NumberField } from "../../Foundry/common/data/fields.mjs";
 import { fancyLog } from "../helpers/grandfunctions.mjs";
 
 export class TrainerData extends foundry.abstract.TypeDataModel {
@@ -25,8 +24,6 @@ export class TrainerData extends foundry.abstract.TypeDataModel {
     // Build out the trainer stats tree
     const statField = label => new fields.SchemaField({
       base: new fields.NumberField({ ...requiredInteger, initial: ( label.toString() == "Stat.Long.HP"? 10 : 5 ) }),
-      feats: new fields.NumberField({ ...requiredInteger, initial: 0 }), // TODO: Tally with active effects 
-      bonus: new fields.NumberField({ ...requiredInteger, initial: 0 }), // TODO: Tally with active effects
       level: new fields.NumberField({ ...requiredInteger, initial: 0 }),
       cs: new fields.NumberField({ ...requiredInteger, initial: 0, min: -6, max: 6 }) 
     }, {/*Validation Step*/});
@@ -48,27 +45,35 @@ export class TrainerData extends foundry.abstract.TypeDataModel {
       age: new fields.StringField({ initial: "" }),
       height: new fields.StringField({ initial: "" }),
       weight: new fields.StringField({ initial: "" }),
+      
+      // NOTE: Should background be an item?
+      background: new fields.SchemaField({
+        name: new fields.StringField({ inintial: "" }),
+        description: new fields.StringField({ initial: "" }),
+        adept: new fields.StringField({ initial: "" }),
+        novice: new fields.StringField({ initial: "" }),
+        pathetic: new fields.SchemaField({
+          1: new fields.StringField({ initial: "" }),
+          2: new fields.StringField({ initial: "" }),
+          3: new fields.StringField({ initial: "" })
+        })
+      })
     }); 
 
     // Resources that can be spent by the trainer
     schema.resources = new fields.SchemaField({
       ap: new fields.SchemaField({
-        value: new fields.NumberField({ ...requiredInteger, initial: 0 }), // To be calculated
-        max: new fields.NumberField({ ...requiredInteger, initial: 0 }),  // To be calculated
-        bonus: new fields.NumberField({ ...requiredInteger, initial: 0 }),
         used: new fields.SchemaField({
           spent: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
-          bound: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-          drained: new fields.NumberField({ ...requiredInteger, initial: 0 }),
         }),
       }),
       health: new fields.SchemaField({
         value: new fields.NumberField({ ...requiredInteger, initial: 42, min: 0 }),
-        max: new fields.NumberField({ ...requiredInteger, initial: 42 }),
+        injuries: new fields.NumberField({  ...requiredInteger, initial: 0, min: 0  })
       }),
     });
-    schema.money = new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 });
 
+    schema.money = new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 });
     schema.level = new fields.NumberField({ ...requiredInteger, initial: 0 });
     schema.exp = new fields.SchemaField({
       milestone: new fields.NumberField({ ...requiredInteger, initial: 0 }),
@@ -86,9 +91,7 @@ export class TrainerData extends foundry.abstract.TypeDataModel {
 // 
 //   #generateTrainerID(data, options, user) {
 //     super._preCreate(data, options, user);
-//     console.log(`PTU | Setting trainer ID : ${Math.floor(Math.random(1e6) * 1e6).toString()}`);
 //     this.updateSource({
-//       'system.details.trainerId': Math.floor(Math.random(1e6) * 1e6).toString(),
 //        img: 'systems/ptu/image/pikachu-silhouette.svg',
 //     });
 //   };
@@ -97,6 +100,23 @@ export class TrainerData extends foundry.abstract.TypeDataModel {
   prepareBaseData() {
     // Data modifications in this step occur before processing embedded
     // documents or derived data.
+    this.#initializeStats();
+    this.#initializeAP();
+  };
+ 
+  #initializeStats() {
+    for (let stat in this.stats) {
+      fancyLog(stat);
+      this.stats[stat].bonus = 0;
+      this.stats[stat].feats = 0;
+    };
+  };
+
+  #initializeAP() {
+    this.resources.ap.max = 5;
+    let apUsed = this.resources.ap.used;
+    apUsed.bound = 0;
+    apUsed.drained = 0;
   };
 
   /**
@@ -113,9 +133,9 @@ export class TrainerData extends foundry.abstract.TypeDataModel {
     this.#prepareLevelandExp();
     this.#prepareStats();
     this.#prepareSkills();
-    this.#prepareHealth();
+    this.#prepareResources();
 
-    GRANDFUNCTION.fancyLog(this.parent);
+    fancyLog(this.parent);
   };
 
   #prepareLevelandExp() {
@@ -134,7 +154,7 @@ export class TrainerData extends foundry.abstract.TypeDataModel {
         1 + ( cs * 0.2 )
         : 1 - ( cs * 0.1 );
     };
-    // This should be a .reduce()
+    
     for ( let trainerStat of Object.keys(this.stats) ) {
       let statTotal = Object.keys(this.stats[trainerStat]).reduce((acc, key) => {
         if( key == "cs" ) return acc;
@@ -157,24 +177,13 @@ export class TrainerData extends foundry.abstract.TypeDataModel {
     }, {});
   };
 
-  #prepareHealth() {
-    let hpMax = 10 + (this.level * 2) + (this.stats.hp.total * 3);
-
-    this.resources.health.max = hpMax; 
-  };
-
-  #prepareAP() {
-  // A player has 5 AP + 1 for every 5 levels
-  }
-  
   #prepareResources() {
     let r = this.resources;
     r.health.max = 10 + (this.level * 2) + (this.stats.hp.total * 3);
-
-    let maxAP = 5 + Math.floor( this.level / 5 ) + r.ap.bonus;
-    r.ap.max = maxAP;
-    r.ap.value = maxAP - Object.values(r.ap.used).reduce((acc, v) => {
+    
+    r.ap.max += Math.floor( this.level / 5 );
+    r.ap.value = r.ap.max - Object.values(r.ap.used).reduce((acc, v) => {
       acc += v;
-    }, 0)
+    }, 0);
   };
 };

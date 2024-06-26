@@ -41,7 +41,6 @@ Hooks.once("init", () => {
   CONFIG.Actor.documentClass = PTUActor;
   Object.assign(CONFIG.Actor.dataModels, {
     trainer: TrainerData,
-//    test: TestData,
   });
 
 
